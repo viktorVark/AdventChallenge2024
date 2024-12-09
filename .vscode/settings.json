@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.gohtml": "html",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "*.tcc": "cpp"
     }
 }

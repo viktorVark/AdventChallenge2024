@@ -98,13 +98,13 @@ int main(){
         guard.set_direction(init_dir);
         guard.set_in_loop(false);
 
-        cout << pos << endl;
+        //cout << pos << endl;
         //moving guard by rules
         while(in_bounds){
             in_bounds = guard.move_guard_part_2(lab_map_part_2);
-            if(pos==123){
+            /* if(pos==123){
                 cout<<guard.display_guard();
-            }
+            } */
         }
 
         //lab_map_part_2.at(coordinates[1]).replace(coordinates[0],1,1,'.');
