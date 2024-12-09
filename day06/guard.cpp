@@ -122,3 +122,96 @@ string Guard::display_guard(){
 
         return true;
     }
+
+    //Another function for moving the guard with small changes
+    bool Guard::move_guard_part_2(vector<string> &field){
+        //defining the bounds
+        int y_max_size = field.size();
+        int x_max_size = field.at(0).size() - 1; //excluding \0 EoL character 
+
+        //each case checks if players next move is in playing field
+        switch (direction){
+            case '^':
+                if(pos_y-1 >= 0){
+                    char next_pos = field.at(pos_y-1)[pos_x];
+                    if(next_pos == '#' || next_pos == 'O'){
+                        field.at(pos_y).replace(pos_x, 1,1,'+');
+                        direction = '>';
+                        increment_x();
+                    }else{
+                        if(field.at(pos_y)[pos_x] == '-'){
+                            field.at(pos_y).replace(pos_x, 1,1,'+');
+                        }else{
+                            field.at(pos_y).replace(pos_x, 1,1,'|');
+                        }
+                        
+                        decrement_y();
+                    }
+                }else{
+                    return false;
+                }
+                break;
+            case '>':
+                if(pos_x+1 <= x_max_size){
+                    char next_pos = field.at(pos_y)[pos_x+1];
+
+                    if(next_pos == '#' || next_pos == 'O'){
+                        field.at(pos_y).replace(pos_x, 1,1,'+');
+                        direction = 'v';
+                        increment_y();
+                    }else{
+                        if(field.at(pos_y)[pos_x] == '|'){
+                            field.at(pos_y).replace(pos_x, 1,1,'+');
+                        }else{
+                            field.at(pos_y).replace(pos_x, 1,1,'-');
+                        }
+                        increment_x();
+                    }
+                }else{
+                    return false;
+                }
+                break;
+            case 'v':
+                if(pos_y+1 <= y_max_size){
+                    char next_pos = field.at(pos_y+1)[pos_x];
+                    if(next_pos == '#' || next_pos == 'O'){
+                        field.at(pos_y).replace(pos_x, 1,1,'+');
+                        direction = '<';
+                        decrement_x();
+                    }else{
+                        if(field.at(pos_y)[pos_x] == '-'){
+                            field.at(pos_y).replace(pos_x, 1,1,'+');
+                        }else{
+                            field.at(pos_y).replace(pos_x, 1,1,'|');
+                        }
+                        increment_y();
+                    }
+                }else{
+                    return false;
+                }
+                break;
+            case '<':
+                if(pos_x-1 >= 0){
+                    char next_pos = field.at(pos_y)[pos_x-1];
+                    if(next_pos == '#' || next_pos == 'O'){
+                        field.at(pos_y).replace(pos_x, 1,1,'+');
+                        direction = '^';
+                        decrement_y();
+                    }else{
+                        if(field.at(pos_y)[pos_x] == '|'){
+                            field.at(pos_y).replace(pos_x, 1,1,'+');
+                        }else{
+                            field.at(pos_y).replace(pos_x, 1,1,'-');
+                        }
+                        decrement_x();
+                    }
+                }else{
+                    return false;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }

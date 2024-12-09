@@ -42,6 +42,7 @@ public:
     string display_guard();
 
     bool move_guard(vector<string> &field);
+    bool move_guard_part_2(vector<string> &field);
 };
 
 #endif

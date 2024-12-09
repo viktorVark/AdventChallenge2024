@@ -14,14 +14,17 @@ int main(){
     bool in_bounds{true};
     int distinct_positions{0};
     string map_after;
+    int init_x, init_y;
+    char init_dir;
 
     
     //initial position and direction
     //filling vector with playing field
     while(getline(inputFile, line)){
         if(line.find('^') < line.size()){
-            guard.set_positions(line.find('^'), line_count);
-            guard.set_direction('^');
+            init_x = line.find('^');
+            init_y = line_count;
+            init_dir = '^';
         }
 
         lab_map.push_back(line);
@@ -29,6 +32,12 @@ int main(){
     }
     inputFile.close();
 
+    //setting initial position and direction for guard
+    guard.set_positions(init_x, init_y);
+    guard.set_direction(init_dir);
+
+    //copying lab for part two of challenge
+    vector<string> lab_map_part_2(lab_map);
 
     //moving guard by rules
     while(in_bounds){
@@ -58,5 +67,24 @@ int main(){
     outputFile.close();
 
     cout << "\n\n\nThe number of distinct positions is: \e[1m" + to_string(distinct_positions) + "\e[0m"<< endl;
-    cout<<"Press Enter to exit..."; cin.get();
+
+
+    in_bounds = true;
+    //setting initial position and direction for guard
+    guard.set_positions(init_x, init_y);
+    guard.set_direction(init_dir);
+    //moving guard by rules
+    while(in_bounds){
+        //cout << guard.display_guard() << endl;
+        in_bounds = guard.move_guard_part_2(lab_map_part_2);
+    }
+
+    string map_after_2;
+    //counting the number of distint positions
+    for(string line: lab_map_part_2){
+        map_after_2 += line + "\n";
+    }
+
+    cout << map_after_2 << endl;
+
 }
