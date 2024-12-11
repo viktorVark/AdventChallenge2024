@@ -28,18 +28,18 @@ int main(){
     string str;
     int safe_reports{0};
     int safe_reports_with_toleration{0};
-
+    //ech line from the input converts to int
     for(string s: list1){
         report.clear();
         stringstream stream(s);
         while(getline(stream, str, ' ')){
             report.push_back(stoi(str));
         }
-
+        //checks report is safe
         if(is_report_safe(report)){
             safe_reports++;
         }
-
+        //checks if report is safe with tolerance
         if(is_report_safe_with_toleration(report)){
             safe_reports_with_toleration++;
         }
