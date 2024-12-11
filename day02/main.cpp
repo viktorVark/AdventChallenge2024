@@ -100,6 +100,9 @@ bool is_report_safe_with_toleration(vector<int> &rep){
                 to_skip = true;
                 tolerated_once = true;
                 continue;
+            }else if(i-1==0 && (rep.at(i) > rep.at(i+1) && rep.at(i) - rep.at(i+1) <= 3)){
+                tolerated_once = true;
+                continue;
             }else{
                 is_safe = false;
                 break;
@@ -130,6 +133,9 @@ bool is_report_safe_with_toleration(vector<int> &rep){
             {
                 tolerated_once = true;
                 to_skip = true;
+                continue;
+            }else if(i-1==0 && (rep.at(i) < rep.at(i+1) && rep.at(i+1) - rep.at(i) <= 3)){
+                tolerated_once = true;
                 continue;
             }else{
                 is_safe = false;
