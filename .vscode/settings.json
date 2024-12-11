@@ -2,6 +2,7 @@
     "files.associations": {
         "*.gohtml": "html",
         "iostream": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "iosfwd": "cpp"
     }
 }
