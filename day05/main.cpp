@@ -11,6 +11,7 @@
 using namespace std;
 
 bool is_right_order(map<string, vector<string>>&, vector<string>&);
+vector<string> ordering_pages(map<string, vector<string>>&, vector<string>&);
 
 
 int main(){
@@ -53,11 +54,14 @@ int main(){
 
 
     //finding indecies of orders that are correct
-    vector<size_t> true_oreders;
+    vector<size_t> true_oreders, false_orders;
     for(size_t c{0}; c<page_orders.size(); c++){
         if(is_right_order(page_weights,page_orders.at(c))){
             //appending vector with the index of the page order
             true_oreders.push_back(c);
+        }
+        else{
+            false_orders.push_back(c);
         }
     }
 
@@ -73,6 +77,29 @@ int main(){
     }
 
     cout<<"Sum of the middle pages " << sum_of_middle << endl;
+
+    vector<vector<string>> wrong_page_orders;
+    for(auto f: false_orders){
+        wrong_page_orders.push_back(page_orders.at(f));
+    }
+
+    vector<vector<string>> updated_order;
+    for(size_t c{0}; c<wrong_page_orders.size(); c++){
+        updated_order.push_back(ordering_pages(page_weights, wrong_page_orders.at(c)));
+    }
+
+    int middle_index{0}, middle_num{0};
+    //going through page orders that are true
+    int sum_of_middle_corrected{0};
+    for(auto w: updated_order){
+        middle_index = (w.size())/2;
+        middle_num = stoi(w.at(middle_index));
+        //adding the middle number to sum
+        sum_of_middle_corrected += middle_num;
+
+    }
+
+    cout<<"Sum of the corrected middle pages " << sum_of_middle_corrected << endl;
 }
 
 //finding if page orders are correct
@@ -100,4 +127,33 @@ bool is_right_order(map<string, vector<string>> &pages, vector<string> &orders){
         }
     }
     return is_right;
+}
+
+
+vector<string> ordering_pages(map<string, vector<string>> &pages, vector<string> &orders){
+    vector<string>::iterator order_begin, order_end;
+    string temp_page;
+
+    //going number by number in vector of page orders
+    for(size_t i {0}; i < orders.size()-1; i++){
+        
+
+        //iterating through ech next number
+        for(size_t j{i+1}; j < orders.size(); j++){
+            //picking map element by key
+            order_begin = pages.at(orders.at(i)).begin();
+            order_end = pages.at(orders.at(i)).end();
+            //checking if next number is in the map with key of given page number
+            if(find(order_begin, order_end, orders.at(j)) == order_end){
+                //changing order of numbers
+                temp_page = orders.at(j);
+                orders.erase(orders.begin()+j);
+                orders.insert(orders.begin()+i,temp_page);
+                i--;
+                break;
+            }
+        }
+    }
+
+    return orders;
 }
