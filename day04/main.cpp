@@ -62,7 +62,7 @@ int main(){
     for(size_t i {3}; i < list_lines.size(); i++){
         for(size_t j {3}; j < list_lines.at(i).size(); j++){
             right_diagonal.clear();
-            //concatenating string with letters in the same column
+            //concatenating string with letters diagonally
             right_diagonal += list_lines.at(i).at(j-3); 
             right_diagonal += list_lines.at(i-1).at(j-2);
             right_diagonal += list_lines.at(i-2).at(j-1);
@@ -83,7 +83,7 @@ int main(){
     for(size_t i {3}; i < list_lines.size(); i++){
         for(size_t j {3}; j < list_lines.at(i).size(); j++){
             left_diagonal.clear();
-            //concatenating string with letters in the same column
+            //concatenating string with letters diagonally
             left_diagonal += list_lines.at(i-3).at(j-3); 
             left_diagonal += list_lines.at(i-2).at(j-2);
             left_diagonal += list_lines.at(i-1).at(j-1);
@@ -97,6 +97,35 @@ int main(){
     }
     
     cout << "Number of horizontal, vertical, right and left diagonal XMAS " << num_of_xmas << "\n";
+
+
+    string mas_diagonal_1, mas_diagonal_2;
+    int num_X_mas{0};
+
+    //counting number of left diagonal (\) XMAS forwards and backwards
+    for(size_t i {2}; i < list_lines.size(); i++){
+        for(size_t j {2}; j < list_lines.at(i).size(); j++){
+            mas_diagonal_1.clear();
+            mas_diagonal_2.clear();
+
+            //concatenating string with letters diagonally
+            mas_diagonal_1 += list_lines.at(i).at(j); 
+            mas_diagonal_1 += list_lines.at(i-1).at(j-1);
+            mas_diagonal_1 += list_lines.at(i-2).at(j-2);
+
+
+            mas_diagonal_2 += list_lines.at(i).at(j-2);
+            mas_diagonal_2 += list_lines.at(i-1).at(j-1);
+            mas_diagonal_2 += list_lines.at(i-2).at(j);
+
+
+            if((mas_diagonal_1 == "MAS" || mas_diagonal_1 == "SAM") && (mas_diagonal_2 == "MAS" || mas_diagonal_2 == "SAM")){
+                num_X_mas++;
+            }
+        }
+    }
+    
+    cout << "Number of X-MAS " << num_X_mas << "\n";
 }
 
 
